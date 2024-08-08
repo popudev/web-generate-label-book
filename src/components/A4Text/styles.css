@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "HP001_4_hang_1_o_ly";
+  src: url("font/HP001_4_hang_1_o_ly.woff2") format("woff2");
+
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HP001_4_hang_1_o_ly_bold";
+  src: url("font/HP001_4_hang_1_o_ly_bold.woff2") format("woff2");
+
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+
+@font-face {
+  font-family: "HP001_4_hang_bold";
+  src: url("font/HP001_4_hang_bold.woff2") format("woff2");
+
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.a4_text {
+  font-family: "HP001_4_hang_1_o_ly", cursive;
+  white-space: pre-wrap;
+}
+
+.a4_label {
+  font-family: "HP001_4_hang_bold";
+  font-style: italic;
+}

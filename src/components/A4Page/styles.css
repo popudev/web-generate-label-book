@@ -1,0 +1,7 @@
+@media print {
+  @page {
+    margin: 0 !important;
+    transform: scale(2);
+    transform-origin: top left;
+  }
+}
