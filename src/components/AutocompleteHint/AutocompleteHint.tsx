@@ -6,14 +6,23 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
+import useDebounce from "@/hooks/useDebounce";
+import useDidUpdate from "@/hooks/useDidUpdate";
 
 type Props = {
   label: string;
+  initialValue?: string;
   options: string[];
+  onChange: (value: string) => void;
 };
 
-export const AutocompleteHint: React.FC<Props> = ({ label, options }) => {
-  const [inputValue, setInputValue] = React.useState("");
+export const AutocompleteHint: React.FC<Props> = ({ label, initialValue, options, onChange }) => {
+  const [inputValue, setInputValue] = React.useState(initialValue);
+  const valueDebounced = useDebounce(inputValue, 500);
+
+  useDidUpdate(() => {
+    onChange(valueDebounced);
+  }, [valueDebounced]);
 
   return (
     <Autocomplete

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { lableSlice } from "./lable/lableSlice";
+import { labelSlice } from "./label/labelSlice";
 import { studentSlice } from "./student/studentSlice";
 import { subjectSlice } from "./subject/subjectSlice";
 
@@ -8,7 +8,7 @@ export const makeStore = () => {
     reducer: {
       subject: subjectSlice.reducer,
       student: studentSlice.reducer,
-      lable: lableSlice.reducer,
+      label: labelSlice.reducer,
     },
   });
 };

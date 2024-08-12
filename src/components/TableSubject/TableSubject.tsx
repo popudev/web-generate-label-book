@@ -13,13 +13,13 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ButtonAddSubjects } from "./buttons/ButtonAddSubjects";
 import { ButtonDeleteSubjects } from "./buttons/ButtonDeleteSubjects";
 import { ButtonLoadSubjects } from "./buttons/ButtonLoadSubjects";
-import { LableSelectors } from "@/store/lable/lableSelector";
+import { LabelSelectors } from "@/store/label/labelSelector";
 import { SubjectSelectors } from "@/store/subject/subjectSelectors";
-import { lableActions } from "@/store/lable/lableSlice";
+import { labelActions } from "@/store/label/labelSlice";
 import { subjectActions } from "@/store/subject/subjectSlice";
 
 export const TableSubject = () => {
-  const subjectIds = useAppSelector(LableSelectors.getSubjectIds());
+  const subjectIds = useAppSelector(LabelSelectors.getSubjectIds());
   const subjectNames = useAppSelector(SubjectSelectors.getSubjectNames());
 
   const rows = useMemo(() => {
@@ -78,7 +78,7 @@ export const TableSubject = () => {
                 return params;
               }}
               onRowSelectionModelChange={(newRowSelectionModel) => {
-                dispatch(lableActions.setSubjectIds(newRowSelectionModel as number[]));
+                dispatch(labelActions.setSubjectIds(newRowSelectionModel as number[]));
               }}
               rowSelectionModel={subjectIds}
               disableRowSelectionOnClick

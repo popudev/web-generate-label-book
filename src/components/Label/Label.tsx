@@ -4,6 +4,7 @@ import { A4Text } from "../A4Text/A4Text";
 import React from "react";
 
 type Props = {
+  index: number;
   school: string;
   fullName: string;
   class: string;
@@ -11,7 +12,30 @@ type Props = {
   subject: string;
 };
 
-export const Lable: React.FC<Props> = ({ school, fullName, class: className, year, subject }) => {
+function calculateEffectiveLength(input: string): number {
+  let length = 0;
+  for (const char of input) {
+    if (char >= "A" && char <= "Z") {
+      length += 2; // Chữ viết hoa tính bằng 2 ký tự thường
+    } else {
+      length += 1; // Chữ thường tính bằng 1 ký tự
+    }
+  }
+  return length;
+}
+
+function padString(input: string, targetLength: number): string {
+  let effectiveLength = input.length;
+
+  if (effectiveLength >= targetLength) {
+    return input;
+  }
+
+  let numSpacesToAdd = targetLength - effectiveLength;
+  return input + " ".repeat(numSpacesToAdd);
+}
+
+export const Label: React.FC<Props> = ({ index, school, fullName, class: className, year, subject }) => {
   return (
     <Box
       sx={{
@@ -19,7 +43,7 @@ export const Lable: React.FC<Props> = ({ school, fullName, class: className, yea
         lineHeight: 0,
       }}
     >
-      <img src="temp.jpg" width={"100%"} height={"100%"} />
+      <img src={`labels/1/${index + 1}.jpg`} width={"100%"} height={"100%"} />
       <Box
         sx={{
           position: "absolute",
@@ -45,12 +69,12 @@ export const Lable: React.FC<Props> = ({ school, fullName, class: className, yea
           {` ${fullName} `}
         </A4Text>
         <Grid container>
-          <Grid item xs={8}>
+          <Grid item xs={calculateEffectiveLength(subject) > 14 ? 8 : 6}>
             <A4Text label="Tập" fontSize={10}>
               {` ${subject} `}
             </A4Text>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={calculateEffectiveLength(subject) > 14 ? 4 : 6}>
             <A4Text
               label="Lớp"
               fontSize={10}
@@ -61,7 +85,7 @@ export const Lable: React.FC<Props> = ({ school, fullName, class: className, yea
                 overflow: "hidden",
               }}
             >
-              {` ${className} `}
+              {` ${padString(className, 3)} `}
             </A4Text>
           </Grid>
         </Grid>

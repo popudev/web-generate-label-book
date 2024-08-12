@@ -21,7 +21,10 @@ const subjectSlice = createSlice({
   initialState,
   reducers: {
     addSubjectNames: (state, action: PayloadAction<string>) => {
-      const names = action.payload.split("\n").map((name) => name.trim());
+      const names = action.payload
+        .split("\n")
+        .flatMap((name) => name.split("\t"))
+        .map((name) => name.trim());
 
       state.subjectNames = [...state.subjectNames, ...names].sort((a, b) => a.localeCompare(b));
     },

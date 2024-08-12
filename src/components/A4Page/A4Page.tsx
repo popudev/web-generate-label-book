@@ -3,7 +3,7 @@ import "./styles.css";
 import { Box, Grid } from "@mui/material";
 import React, { PropsWithChildren, forwardRef } from "react";
 
-import { Lable } from "../Lable";
+import { Label } from "../Label";
 
 type Props = {
   page: {
@@ -25,18 +25,18 @@ export const A4Page: React.FC<Props> = ({ page }) => {
         overflow: "hidden",
         p: "20px",
         transform: "scale(1)",
-        mb: "20px",
       }}
     >
       <Grid container spacing={"20px"}>
-        {page.map((lable, index) => (
+        {page.map((label, index) => (
           <Grid key={index} item xs={6}>
-            <Lable
-              school={lable.schoolName || " ".repeat(33)}
-              fullName={lable.studentName || " ".repeat(25)}
-              subject={lable.subjectName || " ".repeat(20)}
-              class={lable.className || " ".repeat(5)}
-              year={lable.yearDisplay}
+            <Label
+              index={index}
+              school={label.schoolName || " ".repeat(33)}
+              fullName={label.studentName || " ".repeat(25)}
+              subject={label.subjectName || " ".repeat(20)}
+              class={label.className || " ".repeat(5)}
+              year={label.yearDisplay}
             />
           </Grid>
         ))}

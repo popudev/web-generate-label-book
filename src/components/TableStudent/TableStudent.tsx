@@ -14,13 +14,13 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ButtonAddStudents } from "./buttons/ButtonAddStudents";
 import { ButtonDeleteStudents } from "./buttons/ButtonDeleteStudents";
 import { ButtonLoadStudents } from "./buttons/ButtonLoadStudents";
-import { LableSelectors } from "@/store/lable/lableSelector";
+import { LabelSelectors } from "@/store/label/labelSelector";
 import { StudentSelectors } from "@/store/student/studentSelectors";
-import { lableActions } from "@/store/lable/lableSlice";
+import { labelActions } from "@/store/label/labelSlice";
 import { studentActions } from "@/store/student/studentSlice";
 
 export const TableStudent = () => {
-  const studentIds = useAppSelector(LableSelectors.getStudentIds());
+  const studentIds = useAppSelector(LabelSelectors.getStudentIds());
   const studentNames = useAppSelector(StudentSelectors.getStudentNames());
 
   const rows = useMemo(() => {
@@ -79,7 +79,7 @@ export const TableStudent = () => {
                 return params;
               }}
               onRowSelectionModelChange={(newRowSelectionModel) => {
-                dispatch(lableActions.setStudentIds(newRowSelectionModel as number[]));
+                dispatch(labelActions.setStudentIds(newRowSelectionModel as number[]));
               }}
               rowSelectionModel={studentIds}
               disableRowSelectionOnClick
