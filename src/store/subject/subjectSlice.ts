@@ -41,6 +41,10 @@ const subjectSlice = createSlice({
         return name;
       });
     },
+
+    setSubjectNames: (state, action: PayloadAction<string[]>) => {
+      state.subjectNames = action.payload;
+    },
   },
   extraReducers: (builder) => {},
 });

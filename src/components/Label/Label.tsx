@@ -69,12 +69,12 @@ export const Label: React.FC<Props> = ({ index, school, fullName, class: classNa
           {` ${fullName} `}
         </A4Text>
         <Grid container>
-          <Grid item xs={calculateEffectiveLength(subject) > 14 ? 8 : 6}>
+          <Grid item xs={calculateEffectiveLength(subject) > 12 ? 8 : 6}>
             <A4Text label="Tập" fontSize={10}>
               {` ${subject} `}
             </A4Text>
           </Grid>
-          <Grid item xs={calculateEffectiveLength(subject) > 14 ? 4 : 6}>
+          <Grid item xs={calculateEffectiveLength(subject) > 12 ? 4 : 6}>
             <A4Text
               label="Lớp"
               fontSize={10}

@@ -32,10 +32,10 @@ export const A4Page: React.FC<Props> = ({ page }) => {
           <Grid key={index} item xs={6}>
             <Label
               index={index}
-              school={label.schoolName || " ".repeat(33)}
-              fullName={label.studentName || " ".repeat(25)}
-              subject={label.subjectName || " ".repeat(20)}
-              class={label.className || " ".repeat(5)}
+              school={label.schoolName || String.fromCharCode(160).repeat(33)}
+              fullName={label.studentName || String.fromCharCode(160).repeat(25)}
+              subject={label.subjectName || String.fromCharCode(160).repeat(20)}
+              class={label.className || String.fromCharCode(160).repeat(5)}
               year={label.yearDisplay}
             />
           </Grid>

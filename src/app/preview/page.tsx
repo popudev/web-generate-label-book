@@ -1,58 +1,22 @@
 "use client";
 
-import { Box, Button, Toolbar, Typography } from "@mui/material";
-import { useMemo, useRef } from "react";
+import { Box, Button, Toolbar, Typography, Zoom } from "@mui/material";
+import { useMemo, useRef, useState } from "react";
 
 import { A4Page } from "@/components/A4Page";
 import { BottomBar } from "@/components/BottomBar/BottomBar";
 import { LabelSelectors } from "@/store/label/labelSelector";
+import PDFDocument from "pdfkit";
+import SVGtoPDF from "svg-to-pdfkit";
 import { StudentSelectors } from "@/store/student/studentSelectors";
 import { SubjectSelectors } from "@/store/subject/subjectSelectors";
+import blobStream from "blob-stream";
+import domtoimage from "dom-to-image";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useAppSelector } from "@/store/hooks";
 import { useReactToPrint } from "react-to-print";
 import { useRouter } from "next/navigation";
-
-const generatePDF = () => {
-  const input = document.getElementById("label-book");
-
-  if (!input) return;
-
-  html2canvas(input, { useCORS: true }).then((canvas) => {
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4"); // Portrait mode, millimeters, A4 size
-
-    // Lấy kích thước của phần tử HTML
-    const elementWidth = input.offsetWidth;
-    const elementHeight = input.offsetHeight;
-
-    // Kích thước của trang PDF A4
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
-    const scale = pdfWidth / elementWidth;
-    const imgWidth = pdfWidth;
-    const imgHeight = elementHeight * scale;
-
-    // Nếu hình ảnh dài hơn trang A4, tạo nhiều trang
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pdfHeight;
-
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
-    }
-
-    pdf.save("document.pdf");
-  });
-};
 
 export default function Preview() {
   const componentRef = useRef<any>();
@@ -104,12 +68,56 @@ export default function Preview() {
     content: () => componentRef.current,
   });
 
+  // const generatePDF = () => {
+
+  //     // const pdf = new jsPDF("p", "mm", "a4"); // Portrait mode, millimeters, A4 size
+
+  //     // // Lấy kích thước của phần tử HTML
+  //     // const elementWidth = input.offsetWidth;
+  //     // const elementHeight = input.offsetHeight;
+
+  //     // // Kích thước của trang PDF A4
+  //     // const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     // const pdfHeight = pdf.internal.pageSize.getHeight();
+
+  //     // // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
+  //     // const scale = pdfWidth / elementWidth;
+  //     // const imgWidth = pdfWidth;
+  //     // const imgHeight = elementHeight * scale;
+
+  //     // // Nếu hình ảnh dài hơn trang A4, tạo nhiều trang
+  //     // let heightLeft = imgHeight;
+  //     // let position = 0;
+
+  //     // pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  //     // heightLeft -= pdfHeight;
+
+  //     // while (heightLeft >= 0) {
+  //     //   position = heightLeft - imgHeight;
+  //     //   pdf.addPage();
+  //     //   pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  //     //   heightLeft -= pdfHeight;
+  //     // }
+
+  //     // pdf.save("document.pdf");
+  //   });
+  // };
+
+  const [imgSrc, setImgSrc] = useState("");
+
   const handleDownload = () => {
-    // generatePDF();
+    const input = document.getElementById("label-book");
+    if (!input) return;
+
+    domtoimage.toSvg(input).then(function (dataUrl) {
+      console.log("dataUrl: ", dataUrl);
+      setImgSrc(dataUrl);
+    });
   };
 
   return (
     <main>
+      {/* <img src={imgSrc} width={"100%"} /> */}
       <Box
         sx={{
           display: "flex",
@@ -158,9 +166,9 @@ export default function Preview() {
             <Button variant="contained" color="warning" onClick={handlePrint}>
               In
             </Button>
-            <Button variant="contained" color="success" onClick={handleDownload}>
+            {/* <Button variant="contained" color="success" onClick={handleDownload}>
               Tải về
-            </Button>
+            </Button> */}
           </Toolbar>
         </BottomBar>
       </Box>

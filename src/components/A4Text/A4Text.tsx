@@ -31,6 +31,7 @@ export const A4Text: React.FC<Props> = ({ label, children, style, fontSize }) =>
         style={{
           fontSize: fontSize * 1.5,
           lineHeight: fontSize * 1.5 * 2 + "px",
+          whiteSpace: "pre-wrap",
         }}
       >
         {children}
